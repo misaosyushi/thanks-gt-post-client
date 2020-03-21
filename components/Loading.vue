@@ -1,28 +1,28 @@
 <template>
   <lottie-animation
-    path="/loading.json"
-    :options="options"
-    @animCreated="anim"
+    :options="defaultOptions"
+    :height="400"
+    :width="400"
+    @animCreated="handleAnimation"
   />
 </template>
 
 <script>
 import LottieAnimation from 'vue-lottie'
+import * as animationData from '~/assets/loading.json'
 
 export default {
   components: {
     LottieAnimation
   },
   data: () => ({
-    loading: false,
-    options: {
-      loop: false,
-      autoplay: false,
-      rendererSettings: ''
-    }
+    defaultOptions: { type: animationData },
+    animationSpeed: 1
   }),
-  mounted() {
-    // TODO: ローディングスタート/終了
+  methods: {
+    handleAnimation(anim) {
+      this.anim = anim
+    }
   }
 }
 </script>
