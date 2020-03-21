@@ -35,7 +35,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['@/plugins/composition-api'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -65,8 +65,8 @@ export default {
       light: true,
       themes: {
         light: {
-          primary: '#ffb6c1',
-          accent: '#996d73',
+          primary: '#cc919a',
+          accent: '#66484d',
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
