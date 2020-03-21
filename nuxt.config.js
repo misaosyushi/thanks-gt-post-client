@@ -2,6 +2,11 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   mode: 'spa',
+  typescript: {
+    typeCheck: {
+      eslint: true
+    }
+  },
   /*
    ** Headers of the page
    */
@@ -57,11 +62,11 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      light: true,
       themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
+        light: {
+          primary: '#ffb6c1',
+          accent: '#996d73',
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
@@ -78,6 +83,7 @@ export default {
     /*
      ** You can extend webpack config here
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     extend(config, ctx) {}
   }
 }

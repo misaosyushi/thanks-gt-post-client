@@ -1,75 +1,59 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a href="https://vuetifyjs.com" target="_blank"> documentation </a>.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a href="https://chat.vuetifyjs.com/" target="_blank" title="chat">
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a href="https://nuxtjs.org/" target="_blank">
-            Nuxt Documentation
-          </a>
-          <br />
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank">
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire">
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+  <v-content>
+    <v-card>
+      <v-img class="white--text align-end" src="/thanks.jpg" />
+
+      <v-card-title>ありがとう受付窓口</v-card-title>
+
+      <v-card-text class="text--primary">
+        <div>感謝の言葉を贈り合おう</div>
+        <v-layout class="post_form">
+          <v-select
+            class="text_field"
+            label="宛先"
+            color="accent"
+            hint="ありがとうを伝えたい人の名前を選択してください。"
+          />
+          <v-text-field
+            class="text_field"
+            label="あなたの名前"
+            color="accent"
+            hint="あなたの名前を入力してください。"
+          />
+        </v-layout>
+        <v-textarea
+          class="text_area"
+          label="ありがとうメッセージ"
+          color="accent"
+        />
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn large color="primary">
+          送信&nbsp;
+          <v-icon>mdi-heart</v-icon>
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-content>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
-export default {
-  components: {
-    Logo,
-    VuetifyLogo
-  }
-}
+export default {}
 </script>
+
+<style lang="scss">
+.post_form {
+  margin-top: 30px;
+}
+
+.text_field {
+  padding: 10px;
+  max-width: 300px;
+}
+
+.text_area {
+  padding: 10px;
+}
+</style>
