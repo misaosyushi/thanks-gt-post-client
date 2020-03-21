@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content class="thanks_main">
     <v-card>
       <v-img class="white--text align-end" height="450px" src="/thanks.jpg" />
 
@@ -7,9 +7,9 @@
 
       <v-card-text class="text--primary">
         <div>感謝の言葉を贈り合おう</div>
-        <v-layout class="post_form">
+        <v-layout class="thanks_main__post_form">
           <v-select
-            class="text_field"
+            class="thanks_main__text_field"
             label="宛先"
             color="accent"
             hint="ありがとうを伝えたい人の名前を選択してください。"
@@ -17,7 +17,7 @@
             :items="members"
           />
           <v-text-field
-            class="text_field"
+            class="thanks_main__text_field"
             label="あなたの名前"
             color="accent"
             hint="あなたの名前を入力してください。"
@@ -25,7 +25,7 @@
           />
         </v-layout>
         <v-textarea
-          class="text_area"
+          class="thanks_main__text_area"
           label="ありがとうメッセージ"
           color="accent"
           hint="「〜してくれてありがとう」等のメッセージを添えてください。"
@@ -63,17 +63,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.post_form {
-  margin-top: 30px;
-}
-
-.text_field {
-  padding: 10px;
-  max-width: 320px;
-}
-
-.text_area {
-  margin-top: 5px;
-  padding: 10px;
+.thanks_main {
+  min-width: 500px;
+  &__post_form {
+    padding: 10px;
+    margin-top: 30px;
+  }
+  &__text_field {
+    padding: 10px;
+    max-width: 320px;
+  }
+  &__text_area {
+    margin-top: 5px;
+    padding: 10px;
+  }
 }
 </style>
