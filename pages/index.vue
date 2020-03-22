@@ -1,7 +1,7 @@
 <template>
   <v-content class="thanks_main">
     <loading v-if="isLoading" />
-    <v-card>
+    <v-card v-else>
       <v-img class="white--text align-end" height="450px" src="/thanks.jpg" />
 
       <v-card-title>ありがとう受付窓口</v-card-title>
@@ -16,6 +16,8 @@
             hint="ありがとうを伝えたい人の名前を選択してください。"
             persistent-hint
             :items="members"
+            item-value="id"
+            item-text="name"
           />
           <v-text-field
             class="thanks_main__text_field"
@@ -46,36 +48,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from '@vue/composition-api'
+import { Vue, Component } from 'vue-property-decorator'
 import { Member } from '@/entity/Member'
 import Loading from '@/components/Loading.vue'
 
-export default defineComponent({
+@Component({
   components: {
     Loading
-  },
-  setup() {
-    const members = ref<Member[]>(['hoge', 'fuga', 'piyo'])
-
-    const sendMessage = () => console.log('send message')
-
-    let isLoading = reactive<boolean>(true)
-
-    const finishLoading = reactive(
-      setTimeout(() => {
-        isLoading = false
-        console.log('hoge', isLoading)
-      }, 3000)
-    )
-
-    return {
-      isLoading,
-      members,
-      sendMessage,
-      finishLoading
-    }
   }
 })
+export default class Index extends Vue {
+  members: Member[] = [
+    { id: 1, name: 'hoge' },
+    { id: 2, name: 'fuga' },
+    { id: 3, name: 'piyo' }
+  ]
+
+  isLoading = true
+
+  created() {
+    setTimeout(() => {
+      this.isLoading = false
+      console.log('hoge', this.isLoading)
+    }, 2000)
+  }
+
+  sendMessage() {
+    console.log('message')
+  }
+}
 </script>
 
 <style lang="scss">

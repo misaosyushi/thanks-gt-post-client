@@ -13,6 +13,7 @@
 import lottie from 'vue-lottie'
 import * as animationData from '@/assets/heart.json'
 
+// TODO: TSに書き換え
 export default {
   components: {
     lottie
