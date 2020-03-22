@@ -2,11 +2,6 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   mode: 'spa',
-  typescript: {
-    typeCheck: {
-      eslint: true
-    }
-  },
   /*
    ** Headers of the page
    */
@@ -55,6 +50,10 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  manifest: {
+    name: 'ThanksGT',
+    lang: 'ja'
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
