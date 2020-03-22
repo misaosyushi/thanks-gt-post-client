@@ -53,6 +53,9 @@ import { Member } from '@/entity/Member'
 import Loading from '@/components/Loading.vue'
 
 @Component({
+  head() {
+    return { title: 'ありがとう投稿' }
+  },
   components: {
     Loading
   }
@@ -69,7 +72,6 @@ export default class Index extends Vue {
   created() {
     setTimeout(() => {
       this.isLoading = false
-      console.log('hoge', this.isLoading)
     }, 2000)
   }
 
