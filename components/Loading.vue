@@ -1,28 +1,60 @@
 <template>
-  <lottie-animation
-    :options="defaultOptions"
-    :height="400"
-    :width="400"
-    @animCreated="handleAnimation"
-  />
+  <div class="loading">
+    <lottie
+      :options="defaultOptions"
+      :height="400"
+      :width="400"
+      @animCreated="handleAnimation"
+    />
+  </div>
 </template>
 
 <script>
-import LottieAnimation from 'vue-lottie'
-import * as animationData from '~/assets/loading.json'
+import lottie from 'vue-lottie'
+import * as animationData from '@/assets/loading.json'
 
 export default {
   components: {
-    LottieAnimation
+    lottie
   },
   data: () => ({
-    defaultOptions: { type: animationData },
+    defaultOptions: {
+      animationData: animationData.default,
+      loop: true,
+      autoplay: true
+    },
     animationSpeed: 1
   }),
+  watch: {
+    play(value) {
+      this.anim[value ? 'play' : 'stop']()
+    }
+  },
   methods: {
     handleAnimation(anim) {
       this.anim = anim
+    },
+    stopLoading() {
+      setTimeout(() => {
+        this.loop = false
+      }, 500)
     }
   }
 }
 </script>
+
+<style>
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  text-align: center;
+  padding-top: 200px;
+  font-size: 30px;
+  font-family: sans-serif;
+  z-index: 9999;
+}
+</style>
