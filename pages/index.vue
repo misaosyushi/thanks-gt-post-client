@@ -1,5 +1,6 @@
 <template>
   <v-content class="thanks_main">
+    <loading v-if="isLoading" />
     <v-card>
       <v-img class="white--text align-end" height="450px" src="/thanks.jpg" />
 
@@ -45,18 +46,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref, reactive } from '@vue/composition-api'
 import { Member } from '@/entity/Member'
+import Loading from '@/components/Loading.vue'
 
 export default defineComponent({
+  components: {
+    Loading
+  },
   setup() {
     const members = ref<Member[]>(['hoge', 'fuga', 'piyo'])
 
     const sendMessage = () => console.log('send message')
 
+    let isLoading = reactive<boolean>(true)
+
+    const finishLoading = reactive(
+      setTimeout(() => {
+        isLoading = false
+        console.log('hoge', isLoading)
+      }, 3000)
+    )
+
     return {
+      isLoading,
       members,
-      sendMessage
+      sendMessage,
+      finishLoading
     }
   }
 })

@@ -11,7 +11,7 @@
 
 <script>
 import lottie from 'vue-lottie'
-import * as animationData from '@/assets/loading.json'
+import * as animationData from '@/assets/heart.json'
 
 export default {
   components: {
