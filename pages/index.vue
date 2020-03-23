@@ -51,6 +51,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { Member } from '@/entity/Member'
 import Loading from '@/components/Loading.vue'
+import { db } from '@/plugins/firebase'
 
 @Component({
   head() {
@@ -70,6 +71,8 @@ export default class Index extends Vue {
   isLoading = true
 
   created() {
+    console.log(process.env.FIREBASE_DATABASE_URL)
+    this.getUsers()
     setTimeout(() => {
       this.isLoading = false
     }, 2000)
@@ -77,6 +80,12 @@ export default class Index extends Vue {
 
   sendMessage() {
     console.log('message')
+  }
+
+  async getUsers() {
+    const userRef = db.collection('users')
+    const users = await userRef.get()
+    console.log(users)
   }
 }
 </script>
