@@ -1,4 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
+console.info('nuxt.config.js BASE_URL:', process.env.BASE_URL)
 
 export default {
   mode: 'spa',
@@ -34,7 +36,7 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify', '@nuxtjs/dotenv'],
   /*
    ** Nuxt.js modules
    */
