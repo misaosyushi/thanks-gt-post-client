@@ -1,22 +1,23 @@
 # thanks_gt_post_client
 
-> My impressive Nuxt.js project
+### Node / npm のバージョンについて
 
-## Build Setup
+- Node: 12.8.1
+- npm: 6.12.0
 
-```bash
-# install dependencies
-$ npm install
+### 起動手順
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+- パッケージインストールしたいとき
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+`$ npm install`
 
-# generate static project
-$ npm run generate
-```
+- 開発モードで起動したいとき
+
+`$ npm run dev`
+
+- ビルドしたいとき
+
+`$ npm run build`
+
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
