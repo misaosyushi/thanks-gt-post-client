@@ -19,21 +19,12 @@ import { Vue, Component } from 'vue-property-decorator'
 import firebase from '@/plugins/firebase'
 import 'firebase/auth'
 import Loading from '@/components/Loading.vue'
-interface signinData {
-  email: string
-  password: string
-}
 @Component({
   components: {
     Loading
   }
 })
 export default class Signin extends Vue {
-  private signinForm: signinData = {
-    email: '',
-    password: ''
-  }
-
   private isLoading: boolean = true
   private created() {
     firebase.auth().onAuthStateChanged((user) => {
