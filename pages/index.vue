@@ -1,7 +1,7 @@
 <template>
   <v-content class="thanks_main">
-    <!--    <loading v-if="isLoading" />-->
-    <v-card>
+    <loading v-if="isLoading" />
+    <v-card v-else>
       <v-img class="white--text align-end" height="550px" src="/thanks.jpg" />
 
       <v-card-title>ありがとう受付窓口</v-card-title>
@@ -42,7 +42,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn width="150px" large color="primary" @click="sendMessage">
+        <v-btn width="150px" large color="primary" :loading="loading" :disabled="loading" @click="sendMessage">
           送信&nbsp;
           <v-icon>mdi-heart</v-icon>
         </v-btn>
@@ -55,7 +55,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { User } from '@/entity/User'
 import Loading from '@/components/Loading.vue'
-import { db, timeStamp } from '@/plugins/firebase/fireStore'
+import { db, timeStamp, store } from '@/plugins/firebase/fireStore'
 
 @Component({
   head() {
@@ -72,35 +72,20 @@ export default class Index extends Vue {
   targetUser: string = ''
   targetSpirits: string = ''
   thanksMessage: string = ''
+  loading: boolean = false
 
   created() {
-    // this.getUsers()
-    this.findUsers()
-    this.findNDevSpirits()
+    store.findMaster('users').then((res) => (this.members = res.data()!.items))
+    store.findMaster('n_dev_spirits').then((res) => (this.nDevSpirits = res.data()!.items))
+
     setTimeout(() => {
       this.isLoading = false
     }, 2000)
   }
 
-  findUsers() {
-    db.collection('master')
-      .doc('users')
-      .get()
-      .then((res) => {
-        this.members = res.data()!.items
-      })
-  }
-
-  findNDevSpirits() {
-    db.collection('master')
-      .doc('n_dev_spirits')
-      .get()
-      .then((res) => {
-        this.nDevSpirits = res.data()!.items
-      })
-  }
-
+  // TODO: fireStore.tsに移行
   sendMessage() {
+    this.loading = true
     db.collection('users')
       .doc(this.targetUser)
       .set({ email: this.targetUser })
@@ -113,6 +98,7 @@ export default class Index extends Vue {
         {
           from: localStorage.userName,
           message: this.thanksMessage,
+          nDevSpirits: this.targetSpirits,
           created_at: timeStamp
         },
         { merge: true }
@@ -121,6 +107,8 @@ export default class Index extends Vue {
         this.targetUser = ''
         this.targetSpirits = ''
         this.thanksMessage = ''
+        this.loading = false
+        // TODO: 登録成功の通知だす
       })
       .catch((error) => {
         console.error('Error adding document: ', error)

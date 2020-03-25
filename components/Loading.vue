@@ -1,11 +1,6 @@
 <template>
   <div class="loading">
-    <lottie
-      :options="defaultOptions"
-      :height="400"
-      :width="400"
-      @animCreated="handleAnimation"
-    />
+    <lottie :options="defaultOptions" :height="400" :width="400" @animCreated="handleAnimation" />
   </div>
 </template>
 
