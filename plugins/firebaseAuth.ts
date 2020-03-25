@@ -14,7 +14,7 @@ class FirebaseAuth {
     })
   }
 
-  signin() {
+  signin(): Promise<firebase.auth.UserCredential> {
     const provider = new firebase.auth.GoogleAuthProvider()
     provider.setCustomParameters({
       hd: 'uluru.jp'
@@ -28,6 +28,10 @@ class FirebaseAuth {
 
   isLogin() {
     return this.currentUser || false
+  }
+
+  getUser(): firebase.User | null {
+    return this.currentUser
   }
 }
 

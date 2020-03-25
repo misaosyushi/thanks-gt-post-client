@@ -18,6 +18,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { auth } from '@/plugins/firebaseAuth'
 import Loading from '@/components/Loading.vue'
+
 @Component({
   components: {
     Loading
@@ -25,8 +26,12 @@ import Loading from '@/components/Loading.vue'
 })
 export default class Signin extends Vue {
   isLoading: boolean = true
+
   created() {
-    if (auth.isLogin()) this.$router.push('/')
+    if (auth.isLogin()) {
+      this.saveToLocalStorage(auth.getUser())
+      this.$router.push('/')
+    }
     setTimeout(() => {
       this.isLoading = false
     }, 2000)
@@ -35,8 +40,19 @@ export default class Signin extends Vue {
   signin() {
     auth
       .signin()
-      .then(() => this.$router.push('/'))
+      .then((res) => {
+        this.saveToLocalStorage(res.user)
+        this.$router.push('/')
+      })
       .catch((e) => console.log(e))
+  }
+
+  saveToLocalStorage(user: firebase.User | null) {
+    if (user !== null) {
+      localStorage.userName = user.displayName
+      localStorage.email = user.email
+      localStorage.photoURL = user.photoURL
+    }
   }
 }
 </script>
