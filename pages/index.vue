@@ -1,7 +1,7 @@
 <template>
   <v-content class="thanks_main">
-    <loading v-if="isLoading" />
-    <v-card v-else>
+    <!--    <loading v-if="isLoading" />-->
+    <v-card>
       <v-img class="white--text align-end" height="550px" src="/thanks.jpg" />
 
       <v-card-title>ありがとう受付窓口</v-card-title>
@@ -10,24 +10,28 @@
         <div>感謝の言葉を贈り合おう</div>
         <v-layout class="thanks_main__post_form">
           <v-select
+            v-model="targetUser"
             class="thanks_main__text_field"
             label="宛先"
             color="accent"
             hint="ありがとうを伝えたい人の名前を選択してください。"
             persistent-hint
             :items="members"
-            item-value="id"
+            item-value="email"
             item-text="name"
           />
-          <v-text-field
+          <v-select
+            v-model="targetSpirits"
             class="thanks_main__text_field"
-            label="あなたの名前"
+            label="N-Devスピリット"
             color="accent"
-            hint="あなたの名前を入力してください。"
+            hint="当てはまるものを選択してください。"
             persistent-hint
+            :items="nDevSpirits"
           />
         </v-layout>
         <v-textarea
+          v-model="thanksMessage"
           class="thanks_main__text_area"
           label="ありがとうメッセージ"
           color="accent"
@@ -49,7 +53,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { Member } from '@/entity/Member'
+import { User } from '@/entity/User'
 import Loading from '@/components/Loading.vue'
 import { db, timeStamp } from '@/plugins/firebase/fireStore'
 
@@ -62,33 +66,61 @@ import { db, timeStamp } from '@/plugins/firebase/fireStore'
   }
 })
 export default class Index extends Vue {
-  members: Member[] = [
-    { id: 1, name: 'hoge' },
-    { id: 2, name: 'fuga' },
-    { id: 3, name: 'piyo' }
-  ]
-
+  members: User[] = []
+  nDevSpirits: string[] = []
   isLoading = true
+  targetUser: string = ''
+  targetSpirits: string = ''
+  thanksMessage: string = ''
 
   created() {
-    console.log(process.env.FIREBASE_DATABASE_URL)
-    this.getUsers()
+    // this.getUsers()
+    this.findUsers()
+    this.findNDevSpirits()
     setTimeout(() => {
       this.isLoading = false
     }, 2000)
   }
 
+  findUsers() {
+    db.collection('master')
+      .doc('users')
+      .get()
+      .then((res) => {
+        this.members = res.data()!.items
+      })
+  }
+
+  findNDevSpirits() {
+    db.collection('master')
+      .doc('n_dev_spirits')
+      .get()
+      .then((res) => {
+        this.nDevSpirits = res.data()!.items
+      })
+  }
+
   sendMessage() {
     db.collection('users')
-      .doc('1') // メッセージを送る相手のドキュメントパスを指定する
+      .doc(this.targetUser)
+      .set({ email: this.targetUser })
+
+    db.collection('users')
+      .doc(this.targetUser)
       .collection('messages')
-      .add({
-        from: 'piyo',
-        message: 'thanks',
-        created_at: timeStamp
-      })
-      .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id)
+      .doc()
+      .set(
+        {
+          from: localStorage.userName,
+          message: this.thanksMessage,
+          created_at: timeStamp
+        },
+        { merge: true }
+      )
+      .then(() => {
+        this.targetUser = ''
+        this.targetSpirits = ''
+        this.thanksMessage = ''
       })
       .catch((error) => {
         console.error('Error adding document: ', error)
