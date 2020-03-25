@@ -17,6 +17,10 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-btn width="150px" large color="primary" @click="signout">
+        SIGN OUT&nbsp;
+        <v-icon>mdi-emoticon-poop mdi-spin</v-icon>
+      </v-btn>
     </v-navigation-drawer>
     <v-app-bar fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -34,6 +38,7 @@
 </template>
 
 <script>
+import { auth } from '@/plugins/firebaseAuth'
 export default {
   data() {
     return {
@@ -55,6 +60,14 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'ThanksGT'
+    }
+  },
+  methods: {
+    signout() {
+      auth
+        .signout()
+        .then(() => this.$router.push('/signin'))
+        .catch((e) => console.log(e))
     }
   }
 }
