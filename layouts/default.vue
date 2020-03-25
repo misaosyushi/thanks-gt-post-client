@@ -25,6 +25,15 @@
     <v-app-bar fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
+      <v-spacer />
+      <v-btn text outlined height="50px" @click="signout">
+        <v-avatar size="45px">
+          <img :src="userAvatar" alt="Avatar" />
+        </v-avatar>
+        <span class="logout">
+          SIGN OUT
+        </span>
+      </v-btn>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -59,7 +68,8 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'ThanksGT'
+      title: 'ThanksGT',
+      userAvatar: localStorage.photoURL
     }
   },
   methods: {
@@ -72,3 +82,9 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.logout {
+  padding: 0 8px 0 10px;
+}
+</style>
