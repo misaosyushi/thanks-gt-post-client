@@ -26,7 +26,7 @@ import Loading from '@/components/Loading.vue'
 export default class Signin extends Vue {
   isLoading: boolean = true
   created() {
-    if (auth.isLogin()) console.log('fugafuga')
+    if (auth.isLogin()) this.$router.push('/')
     setTimeout(() => {
       this.isLoading = false
     }, 2000)
