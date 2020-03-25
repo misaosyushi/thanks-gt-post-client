@@ -17,4 +17,5 @@ export default firebase
 
 // Firestore settings
 const db = firebase.firestore()
-export { db }
+const timeStamp = firebase.firestore.Timestamp.now()
+export { db, timeStamp }

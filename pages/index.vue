@@ -51,7 +51,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { Member } from '@/entity/Member'
 import Loading from '@/components/Loading.vue'
-import { db } from '@/plugins/firebase'
+import { db, timeStamp } from '@/plugins/firebase'
 
 @Component({
   head() {
@@ -79,13 +79,32 @@ export default class Index extends Vue {
   }
 
   sendMessage() {
-    console.log('message')
+    db.collection('users')
+      .doc('1') // メッセージを送る相手のドキュメントパスを指定する
+      .collection('messages')
+      .add({
+        from: 'piyo',
+        message: 'thanks',
+        created_at: timeStamp
+      })
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef.id)
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error)
+      })
   }
 
+  // TODO: データ取得サンプル。あとで消す。
   async getUsers() {
-    const userRef = db.collection('users')
+    const userRef = db
+      .collection('users')
+      .doc('1') // ここはログインしてるユーザごとに変わるイメージ
+      .collection('messages')
     const users = await userRef.get()
-    console.log(users)
+    users.forEach((doc) => {
+      console.log(doc.data())
+    })
   }
 }
 </script>
