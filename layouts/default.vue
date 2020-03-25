@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { auth } from '@/plugins/firebaseAuth'
+import { auth } from '@/plugins/firebase/firebaseAuth'
 export default {
   data() {
     return {

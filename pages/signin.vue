@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { auth } from '@/plugins/firebaseAuth'
+import { auth } from '@/plugins/firebase/firebaseAuth'
 import Loading from '@/components/Loading.vue'
 
 @Component({

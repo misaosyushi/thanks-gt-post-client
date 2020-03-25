@@ -51,7 +51,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { Member } from '@/entity/Member'
 import Loading from '@/components/Loading.vue'
-import { db, timeStamp } from '@/plugins/firebase'
+import { db, timeStamp } from '@/plugins/firebase/fireStore'
 
 @Component({
   head() {

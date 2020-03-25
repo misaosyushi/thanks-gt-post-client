@@ -14,8 +14,3 @@ if (!firebase.apps.length) {
 }
 
 export default firebase
-
-// Firestore settings
-const db = firebase.firestore()
-const timeStamp = firebase.firestore.Timestamp.now()
-export { db, timeStamp }
