@@ -16,8 +16,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import firebase from '@/plugins/firebase'
-import 'firebase/auth'
+import { auth } from '@/plugins/firebaseAuth'
 import Loading from '@/components/Loading.vue'
 @Component({
   components: {
@@ -25,26 +24,17 @@ import Loading from '@/components/Loading.vue'
   }
 })
 export default class Signin extends Vue {
-  private isLoading: boolean = true
-  private created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.$router.push('/')
-      }
-    })
+  isLoading: boolean = true
+  created() {
+    if (auth.isLogin()) console.log('fugafuga')
     setTimeout(() => {
       this.isLoading = false
     }, 2000)
   }
 
-  private signin() {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    provider.setCustomParameters({
-      hd: 'uluru.jp'
-    })
-    firebase
-      .auth()
-      .signInWithPopup(provider)
+  signin() {
+    auth
+      .signin()
       .then(() => this.$router.push('/'))
       .catch((e) => console.log(e))
   }

@@ -38,8 +38,7 @@
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
-import 'firebase/auth'
+import { auth } from '@/plugins/firebaseAuth'
 export default {
   data() {
     return {
@@ -65,9 +64,8 @@ export default {
   },
   methods: {
     signout() {
-      firebase
-        .auth()
-        .signOut()
+      auth
+        .signout()
         .then(() => this.$router.push('/signin'))
         .catch((e) => console.log(e))
     }
