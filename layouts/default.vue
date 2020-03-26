@@ -45,7 +45,7 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-message-text',
+          icon: 'mdi-pencil',
           title: 'ありがとう投稿',
           to: '/'
         },
