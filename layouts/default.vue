@@ -2,13 +2,7 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" fixed app>
       <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
+        <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -25,6 +19,15 @@
     <v-app-bar fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
+      <v-spacer />
+      <v-btn text outlined height="50px" @click="signout">
+        <v-avatar size="45px">
+          <img :src="userAvatar" alt="Avatar" />
+        </v-avatar>
+        <span class="logout">
+          SIGN OUT
+        </span>
+      </v-btn>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -38,7 +41,7 @@
 </template>
 
 <script>
-import { auth } from '@/plugins/firebaseAuth'
+import { auth } from '@/plugins/firebase/firebaseAuth'
 export default {
   data() {
     return {
@@ -59,7 +62,8 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'ThanksGT'
+      title: 'ThanksGT',
+      userAvatar: localStorage.photoURL
     }
   },
   methods: {
@@ -72,3 +76,9 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.logout {
+  padding: 0 8px 0 10px;
+}
+</style>

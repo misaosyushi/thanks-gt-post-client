@@ -10,24 +10,28 @@
         <div>感謝の言葉を贈り合おう</div>
         <v-layout class="thanks_main__post_form">
           <v-select
+            v-model="targetUser"
             class="thanks_main__text_field"
             label="宛先"
             color="accent"
             hint="ありがとうを伝えたい人の名前を選択してください。"
             persistent-hint
             :items="members"
-            item-value="id"
+            item-value="email"
             item-text="name"
           />
-          <v-text-field
+          <v-select
+            v-model="targetSpirits"
             class="thanks_main__text_field"
-            label="あなたの名前"
+            label="N-Devスピリット"
             color="accent"
-            hint="あなたの名前を入力してください。"
+            hint="当てはまるものを選択してください。"
             persistent-hint
+            :items="nDevSpirits"
           />
         </v-layout>
         <v-textarea
+          v-model="thanksMessage"
           class="thanks_main__text_area"
           label="ありがとうメッセージ"
           color="accent"
@@ -38,7 +42,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn width="150px" large color="primary" @click="sendMessage">
+        <v-btn width="150px" large color="primary" :loading="loading" :disabled="loading" @click="sendMessage">
           送信&nbsp;
           <v-icon>mdi-heart</v-icon>
         </v-btn>
@@ -49,9 +53,9 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { Member } from '@/entity/Member'
+import { User } from '@/entity/User'
 import Loading from '@/components/Loading.vue'
-import { db } from '@/plugins/firebase'
+import { db, timeStamp, store } from '@/plugins/firebase/fireStore'
 
 @Component({
   head() {
@@ -62,30 +66,65 @@ import { db } from '@/plugins/firebase'
   }
 })
 export default class Index extends Vue {
-  members: Member[] = [
-    { id: 1, name: 'hoge' },
-    { id: 2, name: 'fuga' },
-    { id: 3, name: 'piyo' }
-  ]
-
+  members: User[] = []
+  nDevSpirits: string[] = []
   isLoading = true
+  targetUser: string = ''
+  targetSpirits: string = ''
+  thanksMessage: string = ''
+  loading: boolean = false
 
   created() {
-    console.log(process.env.FIREBASE_DATABASE_URL)
-    this.getUsers()
+    store.findMaster('users').then((res) => (this.members = res.data()!.items))
+    store.findMaster('n_dev_spirits').then((res) => (this.nDevSpirits = res.data()!.items))
+
     setTimeout(() => {
       this.isLoading = false
     }, 2000)
   }
 
+  // TODO: fireStore.tsに移行
   sendMessage() {
-    console.log('message')
+    this.loading = true
+    db.collection('users')
+      .doc(this.targetUser)
+      .set({ email: this.targetUser })
+
+    db.collection('users')
+      .doc(this.targetUser)
+      .collection('messages')
+      .doc()
+      .set(
+        {
+          from: localStorage.userName,
+          message: this.thanksMessage,
+          nDevSpirits: this.targetSpirits,
+          created_at: timeStamp
+        },
+        { merge: true }
+      )
+      .then(() => {
+        this.targetUser = ''
+        this.targetSpirits = ''
+        this.thanksMessage = ''
+        this.loading = false
+        // TODO: 登録成功の通知だす
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error)
+      })
   }
 
+  // TODO: データ取得サンプル。あとで消す。
   async getUsers() {
-    const userRef = db.collection('users')
+    const userRef = db
+      .collection('users')
+      .doc('1') // ここはログインしてるユーザごとに変わるイメージ
+      .collection('messages')
     const users = await userRef.get()
-    console.log(users)
+    users.forEach((doc) => {
+      console.log(doc.data())
+    })
   }
 }
 </script>
