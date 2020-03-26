@@ -1,5 +1,6 @@
 <template>
   <v-content class="thanks_main">
+    <h1 class="page_title">メンバー一覧</h1>
     <v-list two-line subheader>
       <v-list-item v-for="user in users" :key="user.email" @click="showThanks(user.email)">
         <v-list-item-avatar>
@@ -42,6 +43,9 @@ export default class Users extends Vue {
 </script>
 
 <style scoped lang="scss">
+.page_title {
+  margin-bottom: 20px;
+}
 .thanks_main {
   min-width: 500px;
 }
