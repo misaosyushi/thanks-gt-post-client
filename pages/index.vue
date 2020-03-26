@@ -114,18 +114,6 @@ export default class Index extends Vue {
         console.error('Error adding document: ', error)
       })
   }
-
-  // TODO: データ取得サンプル。あとで消す。
-  async getUsers() {
-    const userRef = db
-      .collection('users')
-      .doc('1') // ここはログインしてるユーザごとに変わるイメージ
-      .collection('messages')
-    const users = await userRef.get()
-    users.forEach((doc) => {
-      console.log(doc.data())
-    })
-  }
 }
 </script>
 
