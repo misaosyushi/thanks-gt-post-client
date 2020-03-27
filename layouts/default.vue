@@ -10,6 +10,15 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
+        <!-- 旧ThanksGTへのリンク -->
+        <v-list-item @click="openOldThanksGT">
+          <v-list-item-action>
+            <v-icon>mdi-link</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>旧ThanksGT</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar fixed app>
@@ -68,6 +77,9 @@ export default {
         .signout()
         .then(() => this.$router.push('/signin'))
         .catch((e) => console.log(e))
+    },
+    openOldThanksGT() {
+      window.open('https://jovial-wilson-f1f7b0.netlify.com/')
     }
   }
 }
