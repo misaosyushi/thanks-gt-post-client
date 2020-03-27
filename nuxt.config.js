@@ -21,6 +21,9 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/thanks_favicon.svg' }]
   },
+  router: {
+    middleware: 'authenticated'
+  },
   /*
    ** Customize the progress-bar color
    */

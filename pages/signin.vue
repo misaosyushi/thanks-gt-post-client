@@ -27,9 +27,17 @@ import Loading from '@/components/Loading.vue'
 export default class Signin extends Vue {
   isLoading: boolean = true
 
-  created() {
-    if (auth.isLogin()) {
-      this.saveToLocalStorage(auth.getUser())
+  async created() {
+    const user: firebase.User | null = await new Promise((resolve) => {
+      auth.stateChanged((user) => resolve(user))
+    })
+    if (user) {
+      const u = {
+        userName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL
+      }
+      this.$store.dispatch('setUser', u)
       this.$router.push('/')
     }
     setTimeout(() => {
@@ -38,21 +46,7 @@ export default class Signin extends Vue {
   }
 
   signin() {
-    auth
-      .signin()
-      .then((res) => {
-        this.saveToLocalStorage(res.user)
-        this.$router.push('/')
-      })
-      .catch((e) => console.log(e))
-  }
-
-  saveToLocalStorage(user: firebase.User | null) {
-    if (user !== null) {
-      localStorage.userName = user.displayName
-      localStorage.email = user.email
-      localStorage.photoURL = user.photoURL
-    }
+    this.$store.dispatch('signin')
   }
 }
 </script>

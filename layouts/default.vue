@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import { auth } from '@/plugins/firebase/firebaseAuth'
 export default {
   data() {
     return {
@@ -83,6 +82,7 @@ export default {
     },
     toIndex() {
       this.$router.push('/')
+      this.$store.dispatch('signout').then(() => this.$router.push('/signin'))
     }
   }
 }
