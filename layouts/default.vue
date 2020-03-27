@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import { auth } from '@/plugins/firebase/firebaseAuth'
 export default {
   data() {
     return {
@@ -64,10 +63,7 @@ export default {
   },
   methods: {
     signout() {
-      auth
-        .signout()
-        .then(() => this.$router.push('/signin'))
-        .catch((e) => console.log(e))
+      this.$store.dispatch('signout').then(() => this.$router.push('/signin'))
     }
   }
 }
