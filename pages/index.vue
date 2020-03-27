@@ -76,7 +76,7 @@ export default class Index extends Vue {
 
   created() {
     store.findMaster('users').then((res) => (this.members = res.data()!.items))
-    store.findMaster('n_dev_spirits').then((res) => (this.nDevSpirits = res.data()!.items))
+    store.findMaster('n_dev_spirits').then((res) => (this.nDevSpirits = res.data()!.items)) // TODO: キャメルケースに直す
 
     setTimeout(() => {
       this.isLoading = false
@@ -99,7 +99,7 @@ export default class Index extends Vue {
           from: localStorage.userName,
           message: this.thanksMessage,
           nDevSpirits: this.targetSpirits,
-          created_at: timeStamp
+          created_at: timeStamp // TODO: キャメルケースに直す
         },
         { merge: true }
       )
@@ -113,18 +113,6 @@ export default class Index extends Vue {
       .catch((error) => {
         console.error('Error adding document: ', error)
       })
-  }
-
-  // TODO: データ取得サンプル。あとで消す。
-  async getUsers() {
-    const userRef = db
-      .collection('users')
-      .doc('1') // ここはログインしてるユーザごとに変わるイメージ
-      .collection('messages')
-    const users = await userRef.get()
-    users.forEach((doc) => {
-      console.log(doc.data())
-    })
   }
 }
 </script>

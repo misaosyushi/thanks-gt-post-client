@@ -11,10 +11,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-btn width="150px" large color="primary" @click="signout">
-        SIGN OUT&nbsp;
-        <v-icon>mdi-emoticon-poop mdi-spin</v-icon>
-      </v-btn>
     </v-navigation-drawer>
     <v-app-bar fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -49,14 +45,14 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          icon: 'mdi-pencil',
+          title: 'ありがとう投稿',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-account-multiple',
+          title: 'メンバー一覧',
+          to: '/users'
         }
       ],
       miniVariant: false,

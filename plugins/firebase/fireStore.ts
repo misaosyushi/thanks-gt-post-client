@@ -9,6 +9,15 @@ class FireStore {
       .doc(targetDoc)
       .get()
   }
+
+  findMessagesByEmail(email: string): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
+    return firebase
+      .firestore()
+      .collection('users')
+      .doc(email)
+      .collection('messages')
+      .get()
+  }
 }
 
 // Firestore settings
