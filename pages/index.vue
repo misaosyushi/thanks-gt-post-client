@@ -76,7 +76,7 @@ export default class Index extends Vue {
 
   created() {
     store.findMaster('users').then((res) => (this.members = res.data()!.items))
-    store.findMaster('n_dev_spirits').then((res) => (this.nDevSpirits = res.data()!.items)) // TODO: キャメルケースに直す
+    store.findMaster('nDevSpirits').then((res) => (this.nDevSpirits = res.data()!.items))
 
     setTimeout(() => {
       this.isLoading = false
@@ -99,7 +99,7 @@ export default class Index extends Vue {
           from: localStorage.userName,
           message: this.thanksMessage,
           nDevSpirits: this.targetSpirits,
-          created_at: timeStamp // TODO: キャメルケースに直す
+          createdAt: timeStamp
         },
         { merge: true }
       )

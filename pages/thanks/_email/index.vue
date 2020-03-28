@@ -31,7 +31,7 @@ export default class Thanks extends Vue {
     users.forEach((doc) => {
       this.messages.push({
         from: doc.data().from,
-        createdAt: dayjs(doc.data().created_at.toDate()).format('YYYY-MM-DD'), // TODO: キャメルケースに直す
+        createdAt: dayjs(doc.data().createdAt.toDate()).format('YYYY-MM-DD'),
         nDevSpirits: doc.data().nDevSpirits,
         message: doc.data().message
       })
