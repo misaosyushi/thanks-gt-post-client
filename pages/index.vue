@@ -8,6 +8,7 @@
 
       <v-card-text class="text--primary">
         <div>感謝の言葉を贈り合おう</div>
+        <alert :is-success="isSuccess" :is-shoe-alert="isShoeAlert" />
         <v-layout class="thanks_main__post_form">
           <v-select
             v-model="targetUser"
@@ -55,6 +56,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { User } from '@/entity/User'
 import Loading from '@/components/Loading.vue'
+import Alert from '@/components/Alert.vue'
 import { db, timeStamp, store } from '@/plugins/firebase/fireStore'
 
 @Component({
@@ -62,7 +64,8 @@ import { db, timeStamp, store } from '@/plugins/firebase/fireStore'
     return { title: 'ありがとう投稿' }
   },
   components: {
-    Loading
+    Loading,
+    Alert
   }
 })
 export default class Index extends Vue {
@@ -73,6 +76,8 @@ export default class Index extends Vue {
   targetSpirits: string = ''
   thanksMessage: string = ''
   loading: boolean = false
+  isSuccess: boolean = false
+  isShoeAlert: boolean = false
 
   created() {
     store.findMaster('users').then((res) => (this.members = res.data()!.items))
@@ -104,15 +109,22 @@ export default class Index extends Vue {
         { merge: true }
       )
       .then(() => {
+        this.showAlert(true)
         this.targetUser = ''
         this.targetSpirits = ''
         this.thanksMessage = ''
         this.loading = false
-        // TODO: 登録成功の通知だす
       })
       .catch((error) => {
+        this.showAlert(false)
         console.error('Error adding document: ', error)
       })
+  }
+
+  showAlert(isSuccess: boolean) {
+    this.isShoeAlert = true
+    this.isSuccess = isSuccess
+    setTimeout(() => (this.isShoeAlert = false), 2000)
   }
 }
 </script>
