@@ -72,17 +72,13 @@ export default {
   },
   methods: {
     signout() {
-      auth
-        .signout()
-        .then(() => this.$router.push('/signin'))
-        .catch((e) => console.log(e))
+      this.$store.dispatch('signout').then(() => this.$router.push('/signin'))
     },
     openOldThanksGT() {
       window.open('https://jovial-wilson-f1f7b0.netlify.com/')
     },
     toIndex() {
       this.$router.push('/')
-      this.$store.dispatch('signout').then(() => this.$router.push('/signin'))
     }
   }
 }
