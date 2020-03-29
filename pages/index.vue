@@ -80,7 +80,7 @@ export default class Index extends Vue {
 
     setTimeout(() => {
       this.isLoading = false
-    }, 2000)
+    }, 1200)
   }
 
   // TODO: fireStore.tsに移行

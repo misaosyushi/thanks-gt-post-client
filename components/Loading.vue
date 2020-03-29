@@ -21,19 +21,10 @@ export default {
     },
     animationSpeed: 1
   }),
-  watch: {
-    play(value) {
-      this.anim[value ? 'play' : 'stop']()
-    }
-  },
   methods: {
     handleAnimation(anim) {
       this.anim = anim
-    },
-    stopLoading() {
-      setTimeout(() => {
-        this.loop = false
-      }, 500)
+      this.anim.setSpeed(1.5)
     }
   }
 }
