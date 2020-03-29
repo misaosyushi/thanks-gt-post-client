@@ -1,14 +1,10 @@
 import firebase from './firebase'
 import 'firebase/auth'
 
-interface callbackType {
-  (argv: firebase.User | null): void
-}
-
 class FirebaseAuth {
   currentUser: firebase.User | null = null
 
-  stateChanged(callback: callbackType) {
+  stateChanged(callback: (user: firebase.User | null) => void) {
     firebase.auth().onAuthStateChanged((user) => callback(user))
   }
 
