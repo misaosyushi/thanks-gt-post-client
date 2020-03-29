@@ -2,6 +2,7 @@
   <v-content class="thanks_main">
     <h1 class="page_title">ありがとう一覧</h1>
     <v-data-table :headers="headers" :items="messages" :items-per-page="20" />
+    <v-btn class="ma-2" color="primary" to="/users"> <v-icon left>mdi-arrow-left</v-icon>Back </v-btn>
   </v-content>
 </template>
 

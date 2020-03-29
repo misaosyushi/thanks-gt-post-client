@@ -8,6 +8,7 @@
 
       <v-card-text class="text--primary">
         <div>感謝の言葉を贈り合おう</div>
+        <alert :is-success="isSuccess" :is-shoe-alert="isShowAlert" />
         <v-layout class="thanks_main__post_form">
           <v-select
             v-model="targetUser"
@@ -19,6 +20,8 @@
             :items="members"
             item-value="email"
             item-text="name"
+            :error="isValidateError"
+            :error-messages="errorMessage"
           />
           <v-select
             v-model="targetSpirits"
@@ -28,6 +31,8 @@
             hint="当てはまるものを選択してください。"
             persistent-hint
             :items="nDevSpirits"
+            :error="isValidateError"
+            :error-messages="errorMessage"
           />
         </v-layout>
         <v-textarea
@@ -37,6 +42,8 @@
           color="accent"
           hint="「〜してくれてありがとう」等のメッセージを添えてください。"
           persistent-hint
+          :error="isValidateError"
+          :error-messages="errorMessage"
         />
       </v-card-text>
 
@@ -55,6 +62,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { User } from '@/entity/User'
 import Loading from '@/components/Loading.vue'
+import Alert from '@/components/Alert.vue'
 import { db, timeStamp, store } from '@/plugins/firebase/fireStore'
 
 @Component({
@@ -62,7 +70,8 @@ import { db, timeStamp, store } from '@/plugins/firebase/fireStore'
     return { title: 'ありがとう投稿' }
   },
   components: {
-    Loading
+    Loading,
+    Alert
   }
 })
 export default class Index extends Vue {
@@ -73,6 +82,10 @@ export default class Index extends Vue {
   targetSpirits: string = ''
   thanksMessage: string = ''
   loading: boolean = false
+  isSuccess: boolean = false
+  isShowAlert: boolean = false
+  isValidateError: boolean = false
+  errorMessage = ''
 
   created() {
     store.findMaster('users').then((res) => (this.members = res.data()!.items))
@@ -80,12 +93,13 @@ export default class Index extends Vue {
 
     setTimeout(() => {
       this.isLoading = false
-    }, 2000)
+    }, 1200)
   }
 
   // TODO: fireStore.tsに移行
   sendMessage() {
     this.loading = true
+    if (this.validate()) return
     db.collection('users')
       .doc(this.targetUser)
       .set({ email: this.targetUser })
@@ -104,15 +118,34 @@ export default class Index extends Vue {
         { merge: true }
       )
       .then(() => {
+        this.showAlert(true)
         this.targetUser = ''
         this.targetSpirits = ''
         this.thanksMessage = ''
         this.loading = false
-        // TODO: 登録成功の通知だす
       })
       .catch((error) => {
+        this.showAlert(false)
         console.error('Error adding document: ', error)
       })
+  }
+
+  validate(): boolean {
+    if (this.targetUser === '' || this.targetSpirits === '' || this.thanksMessage === '') {
+      this.isValidateError = true
+      this.errorMessage = '必須項目です'
+      this.loading = false
+      return true
+    }
+    this.isValidateError = false
+    this.errorMessage = ''
+    return false
+  }
+
+  showAlert(isSuccess: boolean) {
+    this.isShowAlert = true
+    this.isSuccess = isSuccess
+    setTimeout(() => (this.isShowAlert = false), 2000)
   }
 }
 </script>
