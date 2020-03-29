@@ -37,6 +37,9 @@ export default class Thanks extends Vue {
         message: doc.data().message
       })
     })
+    this.messages.sort((a, b) => {
+      return a.createdAt < b.createdAt ? 1 : -1
+    })
   }
 }
 </script>

@@ -16,7 +16,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: 'N-Devありがとう施策のためのWebアプリです。日々の感謝をたくさん贈り合いましょう！'
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/thanks_favicon.svg' }]
