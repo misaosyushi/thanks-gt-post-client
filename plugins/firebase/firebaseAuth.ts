@@ -4,34 +4,32 @@ import 'firebase/auth'
 class FirebaseAuth {
   currentUser: firebase.User | null = null
 
-  constructor() {
-    this.stateChanged()
+  stateChanged(callback: (user: firebase.User | null) => void) {
+    firebase.auth().onAuthStateChanged((user) => callback(user))
   }
 
-  private stateChanged() {
-    firebase.auth().onAuthStateChanged((u) => {
-      if (u) this.currentUser = u
-    })
-  }
-
-  signin(): Promise<firebase.auth.UserCredential> {
+  signin(): Promise<void> {
     const provider = new firebase.auth.GoogleAuthProvider()
     provider.setCustomParameters({
       hd: 'uluru.jp'
     })
-    return firebase.auth().signInWithPopup(provider)
+    return new Promise((resolve, reject) => {
+      firebase
+        .auth()
+        .signInWithRedirect(provider)
+        .then(() => resolve())
+        .catch((e) => reject(e))
+    })
   }
 
-  signout() {
-    return firebase.auth().signOut()
-  }
-
-  isLogin() {
-    return this.currentUser || false
-  }
-
-  getUser(): firebase.User | null {
-    return this.currentUser
+  signout(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => resolve())
+        .catch((e) => reject(e))
+    })
   }
 }
 
