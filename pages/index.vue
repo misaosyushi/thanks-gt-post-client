@@ -8,7 +8,7 @@
 
       <v-card-text class="text--primary">
         <div>感謝の言葉を贈り合おう</div>
-        <alert :is-success="isSuccess" :is-shoe-alert="isShoeAlert" />
+        <alert :is-success="isSuccess" :is-shoe-alert="isShowAlert" />
         <v-layout class="thanks_main__post_form">
           <v-select
             v-model="targetUser"
@@ -83,7 +83,7 @@ export default class Index extends Vue {
   thanksMessage: string = ''
   loading: boolean = false
   isSuccess: boolean = false
-  isShoeAlert: boolean = false
+  isShowAlert: boolean = false
   isValidateError: boolean = false
   errorMessage = ''
 
@@ -143,9 +143,9 @@ export default class Index extends Vue {
   }
 
   showAlert(isSuccess: boolean) {
-    this.isShoeAlert = true
+    this.isShowAlert = true
     this.isSuccess = isSuccess
-    setTimeout(() => (this.isShoeAlert = false), 2000)
+    setTimeout(() => (this.isShowAlert = false), 2000)
   }
 }
 </script>
