@@ -1,7 +1,7 @@
 {
   "name": "thanks_gt_post_client",
   "version": "1.0.0",
-  "description": "My impressive Nuxt.js project",
+  "description": "N-Devありがとう施策のためのWebアプリです。日々の感謝をたくさん贈り合いましょう！",
   "author": "misaosyushi",
   "private": true,
   "scripts": {

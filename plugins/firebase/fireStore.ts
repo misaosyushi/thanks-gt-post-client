@@ -16,6 +16,7 @@ class FireStore {
       .collection('users')
       .doc(email)
       .collection('messages')
+      .orderBy('createdAt', 'asc')
       .get()
   }
 }
