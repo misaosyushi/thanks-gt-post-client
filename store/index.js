@@ -16,9 +16,15 @@ export const getters = {
 export const mutations = {
   setUser(state, payload) {
     state.user = payload
+    localStorage.userName = payload.userName
+    localStorage.email = payload.email
+    localStorage.photoURL = payload.photoURL
   },
   resetUser(state) {
     state.user = null
+    localStorage.removeItem('userName')
+    localStorage.removeItem('email')
+    localStorage.removeItem('photoURL')
   }
 }
 
