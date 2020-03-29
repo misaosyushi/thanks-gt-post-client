@@ -4,7 +4,7 @@
     <v-card v-else>
       <v-img class="white--text align-end" height="550px" src="/thanks.jpg" />
 
-      <v-card-title>ありがとう受付窓口</v-card-title>
+      <v-card-title>ありがとう受付窓口 test</v-card-title>
 
       <v-card-text class="text--primary">
         <div>感謝の言葉を贈り合おう</div>
