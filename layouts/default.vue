@@ -23,7 +23,7 @@
     </v-navigation-drawer>
     <v-app-bar fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title @click="toIndex" v-text="title" />
       <v-spacer />
       <v-btn text outlined height="50px" @click="signout">
         <v-avatar size="45px">
@@ -80,6 +80,9 @@ export default {
     },
     openOldThanksGT() {
       window.open('https://jovial-wilson-f1f7b0.netlify.com/')
+    },
+    toIndex() {
+      this.$router.push('/')
     }
   }
 }
