@@ -20,10 +20,8 @@ import { Vue, Component } from 'vue-property-decorator'
 import { auth } from '@/plugins/firebase/firebaseAuth'
 
 @Component({
-  layout: 'signin'
-})
-export default class Signin extends Vue {
-  async created() {
+  layout: 'signin',
+  async asyncData({ store, redirect }) {
     const user: firebase.User | null = await new Promise((resolve) => {
       auth.stateChanged((user) => resolve(user))
     })
@@ -33,11 +31,12 @@ export default class Signin extends Vue {
         email: user.email,
         photoURL: user.photoURL
       }
-      this.$store.dispatch('setUser', u)
-      this.$router.push('/')
+      store.dispatch('setUser', u)
+      redirect('/')
     }
   }
-
+})
+export default class Signin extends Vue {
   signin() {
     this.$store.dispatch('signin')
   }
