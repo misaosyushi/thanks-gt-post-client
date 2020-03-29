@@ -30,7 +30,12 @@ export const mutations = {
 
 export const actions = {
   setUser({ commit }, payload) {
-    commit('setUser', payload)
+    const user = {
+      userName: payload.displayName,
+      email: payload.email,
+      photoURL: payload.photoURL
+    }
+    commit('setUser', user)
   },
   signin() {
     return new Promise((resolve, reject) => {

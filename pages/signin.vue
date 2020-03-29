@@ -26,12 +26,7 @@ import { auth } from '@/plugins/firebase/firebaseAuth'
       auth.stateChanged((user) => resolve(user))
     })
     if (user) {
-      const u = {
-        userName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL
-      }
-      store.dispatch('setUser', u)
+      store.dispatch('setUser', user)
       redirect('/')
     }
   }
