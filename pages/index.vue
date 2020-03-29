@@ -20,6 +20,8 @@
             :items="members"
             item-value="email"
             item-text="name"
+            :error="isValidateError"
+            :error-messages="errorMessage"
           />
           <v-select
             v-model="targetSpirits"
@@ -29,6 +31,8 @@
             hint="当てはまるものを選択してください。"
             persistent-hint
             :items="nDevSpirits"
+            :error="isValidateError"
+            :error-messages="errorMessage"
           />
         </v-layout>
         <v-textarea
@@ -38,6 +42,8 @@
           color="accent"
           hint="「〜してくれてありがとう」等のメッセージを添えてください。"
           persistent-hint
+          :error="isValidateError"
+          :error-messages="errorMessage"
         />
       </v-card-text>
 
@@ -78,6 +84,8 @@ export default class Index extends Vue {
   loading: boolean = false
   isSuccess: boolean = false
   isShoeAlert: boolean = false
+  isValidateError: boolean = false
+  errorMessage = ''
 
   created() {
     store.findMaster('users').then((res) => (this.members = res.data()!.items))
@@ -91,6 +99,7 @@ export default class Index extends Vue {
   // TODO: fireStore.tsに移行
   sendMessage() {
     this.loading = true
+    if (this.validate()) return
     db.collection('users')
       .doc(this.targetUser)
       .set({ email: this.targetUser })
@@ -119,6 +128,18 @@ export default class Index extends Vue {
         this.showAlert(false)
         console.error('Error adding document: ', error)
       })
+  }
+
+  validate(): boolean {
+    if (this.targetUser === '' || this.targetSpirits === '' || this.thanksMessage === '') {
+      this.isValidateError = true
+      this.errorMessage = '必須項目です'
+      this.loading = false
+      return true
+    }
+    this.isValidateError = false
+    this.errorMessage = ''
+    return false
   }
 
   showAlert(isSuccess: boolean) {
