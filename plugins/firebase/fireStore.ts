@@ -19,6 +19,13 @@ class FireStore {
       .orderBy('createdAt', 'asc')
       .get()
   }
+
+  findAllMessages(): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
+    return firebase
+      .firestore()
+      .collectionGroup('messages')
+      .get()
+  }
 }
 
 // Firestore settings
