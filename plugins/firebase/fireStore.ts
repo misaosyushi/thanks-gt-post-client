@@ -19,6 +19,22 @@ class FireStore {
       .orderBy('createdAt', 'asc')
       .get()
   }
+
+  findTodayMessages(email: string): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
+    const year = new Date().getFullYear()
+    const month = new Date().getMonth()
+    const date = new Date().getDate()
+
+    return firebase
+      .firestore()
+      .collection('users')
+      .doc(email)
+      .collection('messages')
+      .orderBy('createdAt', 'asc')
+      .startAt(new Date(year, month, date - 1, 18))
+      .endAt(new Date(year, month, date, 18))
+      .get()
+  }
 }
 
 // Firestore settings
