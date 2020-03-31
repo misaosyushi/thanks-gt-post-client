@@ -1,7 +1,7 @@
 <template>
   <v-content class="thanks_main">
     <loading v-if="isLoading" />
-    <v-card v-else>
+    <v-card v-else width="1000px" class="mx-auto">
       <v-img class="white--text align-end" height="550px" src="/thanks.jpg" />
 
       <v-card-title>ありがとう受付窓口</v-card-title>
