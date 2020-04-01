@@ -22,13 +22,6 @@ class FireStore {
       .get()
   }
 
-  findAllMessages(): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
-    return firebase
-      .firestore()
-      .collectionGroup('messages')
-      .get()
-  }
-
   async findNewArrivals(): Promise<NewArrivalMessage[]> {
     const now = new Date()
     const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 18, 0)
