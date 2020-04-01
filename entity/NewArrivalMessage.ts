@@ -1,7 +1,5 @@
-export type NewArrivalMessage = {
-  from: string
+import { Message } from './Message'
+
+export type NewArrivalMessage = Message & {
   to: string | undefined
-  createdAt: string
-  nDevSpirits: string
-  message: string
 }

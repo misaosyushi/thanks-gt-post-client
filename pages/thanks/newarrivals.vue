@@ -8,7 +8,6 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import dayjs from 'dayjs'
 import { store } from '@/plugins/firebase/fireStore'
 import { NewArrivalMessage } from '@/entity/NewArrivalMessage'
 
@@ -28,16 +27,7 @@ export default class Thanks extends Vue {
   ]
 
   async created() {
-    const messages = await store.findAllMessages()
-    messages.forEach((doc) => {
-      this.messages.push({
-        from: doc.data().from,
-        to: doc.ref.parent.parent?.id,
-        createdAt: dayjs(doc.data().createdAt.toDate()).format('YYYY-MM-DD'),
-        nDevSpirits: doc.data().nDevSpirits,
-        message: doc.data().message
-      })
-    })
+    await store.findNewArrivals().then((docs) => docs.forEach((doc) => this.messages.push(doc)))
   }
 }
 </script>
