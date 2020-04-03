@@ -20,6 +20,7 @@
             :items="members"
             item-value="email"
             item-text="name"
+            return-object
             :error="isValidateError"
             :error-messages="errorMessage"
           />
@@ -78,7 +79,7 @@ export default class Index extends Vue {
   members: User[] = []
   nDevSpirits: string[] = []
   isLoading = true
-  targetUser: string = ''
+  targetUser: User = { email: '', name: '' }
   targetSpirits: string = ''
   thanksMessage: string = ''
   loading: boolean = false
@@ -101,11 +102,11 @@ export default class Index extends Vue {
     this.loading = true
     if (this.validate()) return
     db.collection('users')
-      .doc(this.targetUser)
-      .set({ email: this.targetUser })
+      .doc(this.targetUser.email)
+      .set({ email: this.targetUser.email, name: this.targetUser.name })
 
     db.collection('users')
-      .doc(this.targetUser)
+      .doc(this.targetUser.email)
       .collection('messages')
       .doc()
       .set(
@@ -119,7 +120,7 @@ export default class Index extends Vue {
       )
       .then(() => {
         this.showAlert(true)
-        this.targetUser = ''
+        this.targetUser = { email: '', name: '' }
         this.targetSpirits = ''
         this.thanksMessage = ''
         this.loading = false
@@ -131,7 +132,7 @@ export default class Index extends Vue {
   }
 
   validate(): boolean {
-    if (this.targetUser === '' || this.targetSpirits === '' || this.thanksMessage === '') {
+    if (this.targetUser.email === '' || this.targetSpirits === '' || this.thanksMessage === '') {
       this.isValidateError = true
       this.errorMessage = '必須項目です'
       this.loading = false
