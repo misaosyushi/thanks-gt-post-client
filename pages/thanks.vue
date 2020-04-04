@@ -1,6 +1,6 @@
 <template>
   <v-content class="thanks_main">
-    <h1 class="page_title">ありがとう一覧</h1>
+    <h1 class="page_title">{{ userName }}さんのありがとう一覧</h1>
     <v-data-table :headers="headers" :items="messages" :items-per-page="20" />
     <v-btn class="ma-2" color="primary" to="/users"> <v-icon left>mdi-arrow-left</v-icon>Back </v-btn>
   </v-content>
@@ -20,7 +20,9 @@ import { Message } from '@/entity/Message'
 export default class Thanks extends Vue {
   messages: Message[] = []
 
-  headers: any[] = [
+  userName: string = ''
+
+  readonly headers: any[] = [
     { text: '誰から', value: 'from', sortable: true, width: '10%' },
     { text: '日付', value: 'createdAt', sortable: true, width: '10%' },
     { text: 'N-Devスピリット', value: 'nDevSpirits', sortable: true, width: '20%' },
@@ -28,7 +30,8 @@ export default class Thanks extends Vue {
   ]
 
   async created() {
-    const users = await store.findMessagesByEmail(this.$route.params.email)
+    this.userName = String(this.$route.query.name)
+    const users = await store.findMessagesByEmail(String(this.$route.query.email))
     users.forEach((doc) => {
       this.messages.push({
         from: doc.data().from,

@@ -2,7 +2,7 @@
   <v-content class="thanks_main">
     <h1 class="page_title">メンバー一覧</h1>
     <v-list two-line subheader>
-      <v-list-item v-for="user in users" :key="user.email" @click="showThanks(user.email)">
+      <v-list-item v-for="user in users" :key="user.email" @click="showThanks(user.name, user.email)">
         <v-list-item-avatar>
           <!-- TODO: 認証情報から取ってきたアイコンを表示させる -->
           <v-icon class="grey lighten-1 white--text">mdi-account</v-icon>
@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import { Location } from 'vue-router'
 import { Vue, Component } from 'vue-property-decorator'
 import { store } from '@/plugins/firebase/fireStore'
 import { User } from '@/entity/User'
@@ -36,8 +37,12 @@ export default class Users extends Vue {
     store.findMaster('users').then((res) => (this.users = res.data()!.items))
   }
 
-  showThanks(email: string) {
-    this.$router.push({ path: `/thanks/${email}` })
+  showThanks(queryName: string, queryEmail: string) {
+    const location: Location = {
+      name: 'thanks',
+      query: { name: queryName, email: queryEmail }
+    }
+    this.$router.push(location)
   }
 }
 </script>

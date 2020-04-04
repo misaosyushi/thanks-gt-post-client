@@ -18,6 +18,6 @@ export default async function({ store, route, redirect }) {
     redirect('/signin')
   }
   if (isAuthenticated && isSignin) {
-    redirect('/')
+    redirect(route.fullPath)
   }
 }
