@@ -43,11 +43,6 @@ export default class Thanks extends Vue {
     this.messages.sort((a, b) => {
       return a.createdAt < b.createdAt ? 1 : -1
     })
-    const test = await store.findTodayMessages(this.$route.params.email)
-    console.log(test)
-    test.forEach((doc) => {
-      console.log(doc.data())
-    })
   }
 }
 </script>
