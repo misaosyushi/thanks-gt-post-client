@@ -20,6 +20,7 @@ class FireStore {
       .get()
   }
 
+  // TODO: あとで消す
   findTodayMessages(email: string): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
     const year = new Date().getFullYear()
     const month = new Date().getMonth()
@@ -31,8 +32,7 @@ class FireStore {
       .doc(email)
       .collection('messages')
       .orderBy('createdAt', 'asc')
-      .startAt(new Date(year, month, date - 1, 18))
-      .endAt(new Date(year, month, date, 18))
+      .startAt(new Date(year, month, date - 2, 18))
       .get()
   }
 }
