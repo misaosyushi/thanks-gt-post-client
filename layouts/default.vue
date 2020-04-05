@@ -61,6 +61,11 @@ export default {
           icon: 'mdi-account-multiple',
           title: 'メンバー一覧',
           to: '/users'
+        },
+        {
+          icon: 'mdi-new-box',
+          title: '新着一覧',
+          to: '/newarrivals'
         }
       ],
       miniVariant: false,
