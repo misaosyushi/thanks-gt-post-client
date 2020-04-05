@@ -43,14 +43,6 @@ export default class Thanks extends Vue {
     this.messages.sort((a, b) => {
       return a.createdAt < b.createdAt ? 1 : -1
     })
-    // TODO: あとで消す
-    const test = await store.findTodayMessages(String(this.$route.query.email))
-    const noticeList: any[] = []
-    test.forEach((doc) => {
-      noticeList.push({ from: doc.data().from, message: doc.data().message })
-      console.log(doc.data())
-      console.log(noticeList)
-    })
   }
 }
 </script>
