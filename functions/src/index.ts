@@ -36,3 +36,17 @@ exports.getNewArrivals = functions.region('asia-northeast1').https.onRequest(asy
   }
   response.send(noticeList)
 })
+
+type User = {
+  name: string | undefined
+  email: string | undefined
+  photoURL: string | undefined
+}
+
+exports.getUsers = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
+  const auth = admin.auth()
+  const res = await auth.listUsers()
+  const users: User[] = []
+  res.users.forEach((user) => users.push({ name: user.displayName, email: user.email, photoURL: user.photoURL }))
+  response.send(users)
+})
