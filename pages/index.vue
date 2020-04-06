@@ -111,6 +111,7 @@ export default class Index extends Vue {
       .doc()
       .set(
         {
+          to: this.targetUser.name,
           from: localStorage.userName,
           message: this.thanksMessage,
           nDevSpirits: this.targetSpirits,
