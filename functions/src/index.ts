@@ -48,5 +48,8 @@ exports.getUsers = functions.region('asia-northeast1').https.onRequest(async (re
   const res = await auth.listUsers()
   const users: User[] = []
   res.users.forEach((user) => users.push({ name: user.displayName, email: user.email, photoURL: user.photoURL }))
+
+  // MEMO: 本番でもローカルでも動くように全部許可している。本当は単一ドメインを指定するべき。
+  response.set('Access-Control-Allow-Origin', '*')
   response.send(users)
 })

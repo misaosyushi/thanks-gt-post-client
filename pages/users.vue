@@ -4,8 +4,7 @@
     <v-list two-line subheader>
       <v-list-item v-for="user in users" :key="user.email" @click="showThanks(user.name, user.email)">
         <v-list-item-avatar>
-          <!-- TODO: 認証情報から取ってきたアイコンを表示させる -->
-          <v-icon class="grey lighten-1 white--text">mdi-account</v-icon>
+          <img :src="user.photoURL" alt="User Avater" />
         </v-list-item-avatar>
 
         <v-list-item-content>
@@ -20,7 +19,6 @@
 <script lang="ts">
 import { Location } from 'vue-router'
 import { Vue, Component } from 'vue-property-decorator'
-import { store } from '@/plugins/firebase/fireStore'
 import { User } from '@/entity/User'
 
 @Component({
@@ -31,10 +29,8 @@ import { User } from '@/entity/User'
 export default class Users extends Vue {
   users: User[] = []
 
-  created() {
-    // TODO: firebase admin sdkで認証済みのユーザ一覧を取れるっぽいので後で直す
-    // このへん：https://firebase.google.com/docs/admin/setup?hl=ja
-    store.findMaster('users').then((res) => (this.users = res.data()!.items))
+  async created() {
+    this.users = await this.$axios.$get<User[]>(`${process.env.NUXT_ENV_BASE_URL}/getUsers`)
   }
 
   showThanks(queryName: string, queryEmail: string) {
