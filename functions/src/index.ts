@@ -36,3 +36,19 @@ exports.getNewArrivals = functions.region('asia-northeast1').https.onRequest(asy
   }
   response.send(noticeList)
 })
+
+type User = {
+  name: string | undefined
+  email: string | undefined
+  photoURL: string | undefined
+}
+
+exports.users = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
+  const res = await admin.auth().listUsers()
+  const users: User[] = []
+  res.users.forEach((user) => users.push({ name: user.displayName, email: user.email, photoURL: user.photoURL }))
+
+  // MEMO: 本番でもローカルでも動くように全部許可している。本当は単一ドメインを指定するべき。
+  response.set('Access-Control-Allow-Origin', '*')
+  response.send(users)
+})

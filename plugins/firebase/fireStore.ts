@@ -52,11 +52,14 @@ class FireStore {
     )
     return newArrivalMessages.filter((m) => m.length > 0).flat(2)
   }
+
+  getTimeStamp(): firebase.firestore.Timestamp {
+    return firebase.firestore.Timestamp.now()
+  }
 }
 
 // Firestore settings
 const db = firebase.firestore()
-const timeStamp = firebase.firestore.Timestamp.now()
 const store = new FireStore()
 
-export { db, timeStamp, store }
+export { db, store }
