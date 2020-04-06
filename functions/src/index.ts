@@ -43,9 +43,8 @@ type User = {
   photoURL: string | undefined
 }
 
-exports.getUsers = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
-  const auth = admin.auth()
-  const res = await auth.listUsers()
+exports.users = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
+  const res = await admin.auth().listUsers()
   const users: User[] = []
   res.users.forEach((user) => users.push({ name: user.displayName, email: user.email, photoURL: user.photoURL }))
 

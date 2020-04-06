@@ -30,7 +30,7 @@ export default class Users extends Vue {
   users: User[] = []
 
   async created() {
-    this.users = await this.$axios.$get<User[]>(`${process.env.NUXT_ENV_BASE_URL}/getUsers`)
+    this.users = await this.$axios.$get<User[]>(`${process.env.NUXT_ENV_BASE_URL}/users`)
   }
 
   showThanks(queryName: string, queryEmail: string) {
