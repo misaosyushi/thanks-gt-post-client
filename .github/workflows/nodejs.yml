@@ -34,7 +34,7 @@ jobs:
         echo "NUXT_ENV_BASE_URL=${{ secrets.BASE_URL }}" >> .env
     - name: npm install, build
       run: |
-           npm install
+           npm install --no-optional
            npm run build
     - name: deploy to Firebase Hosting
       uses: w9jds/firebase-action@master
