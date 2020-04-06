@@ -64,7 +64,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import { User } from '@/entity/User'
 import Loading from '@/components/Loading.vue'
 import Alert from '@/components/Alert.vue'
-import { db, timeStamp, store } from '@/plugins/firebase/fireStore'
+import { db, store } from '@/plugins/firebase/fireStore'
 
 @Component({
   head() {
@@ -115,7 +115,7 @@ export default class Index extends Vue {
           from: localStorage.userName,
           message: this.thanksMessage,
           nDevSpirits: this.targetSpirits,
-          createdAt: timeStamp
+          createdAt: store.getTimeStamp()
         },
         { merge: true }
       )
