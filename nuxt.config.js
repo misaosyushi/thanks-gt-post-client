@@ -24,6 +24,7 @@ export default {
   router: {
     middleware: 'authenticated'
   },
+  ignore: ['functions/'],
   /*
    ** Customize the progress-bar color
    */
