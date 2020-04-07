@@ -26,7 +26,18 @@ export default class Thanks extends Vue {
   ]
 
   async created() {
-    await store.findNewArrivals().then((docs) => docs.forEach((doc) => this.messages.push(doc)))
+    await store.findNewArrivals().then((docs) =>
+      docs.forEach((doc) => {
+        const data = doc.data()
+        this.messages.push({
+          to: data.to,
+          from: data.from,
+          message: data.message,
+          nDevSpirits: data.nDevSpirits,
+          createdAt: data.createdAt
+        })
+      })
+    )
   }
 }
 </script>

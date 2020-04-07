@@ -1,5 +1,5 @@
 export type Message = {
-  from: number
+  from: string
   createdAt: string
   nDevSpirits: string
   message: string
