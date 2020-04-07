@@ -1,7 +1,5 @@
-import dayjs from 'dayjs'
 import firebase from './firebase'
 import 'firebase/firestore'
-import { NewArrivalMessage } from '~/entity/NewArrivalMessage'
 
 class FireStore {
   findMaster(targetDoc: string): Promise<firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>> {
