@@ -19,8 +19,8 @@ export default class Thanks extends Vue {
   messages: NewArrivalMessage[] = []
 
   headers: any[] = [
-    { text: 'TO', value: 'to', sortable: true, width: '10%' },
     { text: 'FROM', value: 'from', sortable: true, width: '10%' },
+    { text: 'TO', value: 'to', sortable: true, width: '10%' },
     { text: 'N-Devスピリット', value: 'nDevSpirits', sortable: true, width: '20%' },
     { text: 'メッセージ', value: 'message', sortable: false, width: '60%' }
   ]
