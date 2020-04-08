@@ -14,26 +14,18 @@ type Notice = {
 }
 
 exports.getNewArrivals = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
-  const userRef = await fireStore
-    .collection('master')
-    .doc('users')
-    .get()
   const now = new Date()
+  // NOTE: firebase上でnew DateするとUTCになるため、+9時間している
+  now.setHours(now.getHours() + 9)
   const noticeList: Notice[] = []
 
-  for (const doc of userRef.data()!.items) {
-    const messageRef = await fireStore
-      .collection('users')
-      .doc(doc.email)
-      .collection('messages')
-      .orderBy('createdAt', 'asc')
-      .startAt(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 18, 0))
-      .get()
-
-    messageRef.forEach((msgDoc) => {
-      noticeList.push({ from: msgDoc.data().from.slice(0, -2), to: msgDoc.data().to, message: msgDoc.data().message })
-    })
-  }
+  const messageRef = await fireStore
+    .collectionGroup('messages')
+    .where('createdAt', '>=', new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 18, 0))
+    .get()
+  messageRef.forEach((msgDoc) => {
+    noticeList.push({ from: msgDoc.data().from, to: msgDoc.data().to, message: msgDoc.data().message })
+  })
   response.send(noticeList)
 })
 
