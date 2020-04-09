@@ -1,23 +1,24 @@
-# thanks_gt_post_client
+# ThanksGT
 
-### Node / npm のバージョンについて
+### ディレクトリについて
 
-- Node: 12.8.1
-- npm: 6.12.0
+- `functions/`
 
-### 起動手順
+firebase functionsのソースを置くディレクトリです。
+開発するときは`functions/`にcdしてください。
 
-- パッケージインストールしたいとき
-
-`$ npm install`
-
-- 開発モードで起動したいとき
-
-`$ npm run dev`
-
-- ビルドしたいとき
-
-`$ npm run build`
+```
+cd functions/
+npm install
+```
 
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+- `src/`
+
+フロント（Nuxt.js）のソースを置くディレクトリです。
+開発するときは`src/`にcdしてください。
+
+```
+cd src/
+npm install
+```
