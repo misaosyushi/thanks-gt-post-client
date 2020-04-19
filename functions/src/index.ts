@@ -5,7 +5,6 @@ admin.initializeApp({
   credential: admin.credential.applicationDefault(),
   databaseURL: functions.config().someservice.database_url
 })
-const fireStore = admin.firestore()
 
 type Notice = {
   from: string
@@ -17,14 +16,17 @@ exports.getNewArrivals = functions.region('asia-northeast1').https.onRequest(asy
   const now = new Date()
   // NOTE: firebase上でnew DateするとUTCになるため、+9時間している
   now.setHours(now.getHours() + 9)
+  const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 18, 0)
+  console.log('now time', now)
+  console.log('yesterday', yesterday)
   const noticeList: Notice[] = []
 
-  const messageRef = await fireStore
+  const messageRef = await admin.firestore()
     .collectionGroup('messages')
-    .where('createdAt', '>=', new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 18, 0))
+    .where('createdAt', '>=', yesterday)
     .get()
   messageRef.forEach((msgDoc) => {
-    noticeList.push({ from: msgDoc.data().from, to: msgDoc.data().to, message: msgDoc.data().message })
+    noticeList.push({from: msgDoc.data().from, to: msgDoc.data().to, message: msgDoc.data().message})
   })
   response.send(noticeList)
 })
@@ -38,7 +40,7 @@ type User = {
 exports.users = functions.region('asia-northeast1').https.onRequest(async (request, response) => {
   const res = await admin.auth().listUsers()
   const users: User[] = []
-  res.users.forEach((user) => users.push({ name: user.displayName, email: user.email, photoURL: user.photoURL }))
+  res.users.forEach((user) => users.push({name: user.displayName, email: user.email, photoURL: user.photoURL}))
 
   // MEMO: 本番でもローカルでも動くように全部許可している。本当は単一ドメインを指定するべき。
   response.set('Access-Control-Allow-Origin', '*')
