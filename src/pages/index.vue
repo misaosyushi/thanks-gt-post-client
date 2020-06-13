@@ -10,7 +10,7 @@
         <div>感謝の言葉を贈り合おう</div>
         <alert :is-success="isSuccess" :is-shoe-alert="isShowAlert" />
         <v-layout class="thanks_main__post_form">
-          <v-select
+          <v-autocomplete
             v-model="targetUser"
             class="thanks_main__text_field"
             label="宛先"
